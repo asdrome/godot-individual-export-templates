@@ -8,11 +8,17 @@ const config = {
   preprocess: vitePreprocess(),
 
   kit: {
-    // default options are shown. On some platforms
-    // these options are set automatically — see below
+    // GitHub Pages
     adapter: adapter({
+      pages: "build",
+      assets: "build",
+      precompress: false,
       strict: true,
     }),
+    paths: {
+      // ENV variable set in GitHub Actions workflow
+      base: process.env.BASE_PATH || "",
+    },
   },
   compilerOptions: {
     runes: true, // Forces all components into runes mode
