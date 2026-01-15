@@ -1,0 +1,168 @@
+/* Godot Minimal Theme */
+:root {
+  /* Colors */
+  --color-base: #272727;
+  --color-accent: #569eff;
+
+  /* Contrast / opacity */
+  --contrast-low: 0.3;
+  --contrast-high: 0.35;
+
+  /* Icon */
+  --icon-saturation: 2;
+
+  /* Radius */
+  --radius-sm: 4px;
+  --radius-md: 5px;
+
+  /* Text */
+  --text-primary: rgba(255, 255, 255, 0.87);
+  --text-secondary: rgba(255, 255, 255, var(--contrast-high));
+  --text-disabled: rgba(255, 255, 255, var(--contrast-low));
+
+  /* Backgrounds */
+  --bg-primary: var(--color-base);
+  --bg-secondary: rgba(255, 255, 255, 0.04);
+  --bg-hover: rgba(255, 255, 255, 0.06);
+  --bg-active: rgba(255, 255, 255, 0.1);
+
+  /* Accent states */
+  --accent-default: var(--color-accent);
+  --accent-hover: color-mix(in srgb, var(--color-accent) 90%, white);
+  --accent-active: color-mix(in srgb, var(--color-accent) 85%, black);
+
+  /* Borders */
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.16);
+
+  /* Focus */
+  --focus-ring: 0 0 0 2px
+    color-mix(in srgb, var(--color-accent) 60%, transparent);
+}
+
+.rounded-sm {
+  border-radius: var(--radius-sm);
+}
+
+.rounded-md {
+  border-radius: var(--radius-md);
+}
+body {
+  font-family: sans-serif;
+  line-height: 1.5;
+  max-width: 960px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+  background: #1f1f1f;
+  color: var(--text-primary);
+  font-size: 1.1rem;
+}
+
+select {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  padding: 0.5rem 0.75rem;
+  font-size: 1.2rem;
+}
+
+.card {
+  background: var(--bg-primary);
+  padding: 1rem 1.5rem;
+  border-radius: 5px;
+  border: 1px solid var(--border-subtle);
+}
+
+a {
+  color: var(--accent-default);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+button {
+  background: #569eff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+button:disabled {
+  background: #555;
+}
+
+.loader {
+  color: #aaa;
+  font-style: italic;
+}
+
+.platform-group {
+  border: 1px solid #444;
+  border-radius: 6px;
+  margin: 10px 0;
+  background: #2a2a2a;
+}
+
+.platform-group summary {
+  cursor: pointer;
+  padding: 10px 12px;
+  font-weight: bold;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.platform-group summary .select-all {
+  margin-left: auto;
+  cursor: pointer;
+}
+
+.platform-files {
+  padding: 0 14px 10px 16px;
+}
+
+.warning-box {
+  background: rgba(255, 193, 7, 0.1);
+  border-left: 4px solid #ffc107;
+  padding: 15px;
+  margin: 20px 0;
+  color: #ffca28;
+}
+
+button:hover:not(:disabled) {
+  background: #5ba1d4;
+  transform: translateY(-1px);
+}
+
+.platform-group:hover {
+  border-color: #478cbf;
+}
+
+.file-item:hover {
+  color: #478cbf;
+}
+
+footer {
+  margin: 40px 0 20px;
+  padding-top: 14px;
+  border-top: 1px solid #333;
+  text-align: center;
+  color: #999;
+  font-size: 0.95em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+footer img {
+  height: 1.2em;
+  vertical-align: middle;
+}

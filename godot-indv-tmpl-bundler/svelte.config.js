@@ -14,6 +14,9 @@ const config = {
       strict: true,
     }),
   },
+  compilerOptions: {
+    runes: true, // Forces all components into runes mode
+  },
 };
 
 export default config;
