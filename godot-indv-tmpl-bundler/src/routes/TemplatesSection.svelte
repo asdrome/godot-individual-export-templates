@@ -4,18 +4,15 @@
 
   let {
     release = $bindable(),
-    releases = $bindable(),
+    chosenAssets = $bindable(),
     REPO_NAME,
   }: {
     release: Release;
-    releases: Release[];
+    chosenAssets: Asset[];
     REPO_NAME: string;
   } = $props();
 
-  let chosenAssets: Asset[] = $state([]);
-  let releases_tags: string[] = $derived(
-    releases.map((r: Release) => r.tag_name)
-  );
+  let releases: Release[] = $state([]);
 
   async function fetchReleases(): Promise<Release[]> {
     const API_URL = `https://api.github.com/repos/${REPO_NAME}/releases`;
@@ -52,7 +49,7 @@
     </select>
   </div>
 
-  <TemplatesSelector {release} {chosenAssets} />
+  <TemplatesSelector {release} bind:chosenAssets />
 </section>
 
 <style>

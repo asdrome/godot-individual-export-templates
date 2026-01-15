@@ -105,30 +105,81 @@
           platform.assets.every((asset) =>
             chosenAssets.some((c) => c.id === asset.id)
           )}
-        <div class="platform-item">
-          <strong>{platform.label}</strong>
-          <input
-            type="checkbox"
-            id={`platform-${platform.label}`}
-            checked={allSelected}
-            onclick={() => togglePlatformAssets(platform, !allSelected)}
-            disabled={platform.label === "Version"}
-          />
-        </div>
-        <div class="card">
-          {#each platform.assets as asset}
-            <div class="asset-item">
-              <input
-                type="checkbox"
-                id={`asset-${asset.id}`}
-                value={asset}
-                bind:group={chosenAssets}
-                disabled={asset.name.toLowerCase() === "version.txt"}
-              />
-              <label for={`asset-${asset.id}`}>{asset.name}</label>
-            </div>
-          {/each}
-        </div>
+        <!-- Generated variable to manage the Accordion -->
+        {@const isOpen = expandedPlatforms.has(platform.label)}
+        <button
+          class="platform-item"
+          onclick={() => toggleAccordion(platform.label)}
+        >
+          <div class="card-header">
+            <span class="arrow" class:open={isOpen}>
+              {#if isOpen}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="lucide lucide-chevron-down-icon lucide-chevron-down"
+                  ><path d="m6 9 6 6 6-6" /></svg
+                >
+              {:else}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="lucide lucide-chevron-right-icon lucide-chevron-right"
+                  ><path d="m9 18 6-6-6-6" /></svg
+                >
+              {/if}
+            </span>
+            <h3>{platform.label}</h3>
+            <span
+              ><p>
+                {platform.assets.length}
+                {platform.assets.length === 1 ? "asset" : "assets"}
+              </p></span
+            >
+            <input
+              type="checkbox"
+              id={`platform-${platform.label}`}
+              checked={allSelected}
+              onclick={(e) => {
+                togglePlatformAssets(platform, !allSelected);
+                e.stopPropagation();
+              }}
+              disabled={platform.label === "Version"}
+            />
+          </div>
+        </button>
+        {#if isOpen}
+          <div class="card" transition:slide>
+            {#each platform.assets as asset}
+              <div class="asset-item">
+                <input
+                  type="checkbox"
+                  id={`asset-${asset.id}`}
+                  value={asset}
+                  bind:group={chosenAssets}
+                  disabled={asset.name.toLowerCase() === "version.txt"}
+                />
+                <label for={`asset-${asset.id}`}>{asset.name}</label>
+              </div>
+            {/each}
+          </div>
+        {:else}
+          <div class="separator"></div>
+        {/if}
       {/each}
     </div>
   {:else}
@@ -139,7 +190,7 @@
 <style>
   .templates-selector-group .card {
     background-color: var(--bg-secondary);
-    margin-bottom: 1rem;
+    margin: 1rem 0;
   }
 
   .release-title {
@@ -148,12 +199,32 @@
     align-items: center;
   }
 
-  .platform-item {
-    display: inline-block;
+  .card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .asset-item {
+    display: flex;
+    align-items: center;
   }
 
   .asset-item label,
   .asset-item input {
+    cursor: pointer;
+  }
+
+  .separator {
+    margin: 0.5rem 0;
+  }
+
+  button {
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: none;
+    padding: 0.5rem;
     cursor: pointer;
   }
 </style>

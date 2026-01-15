@@ -3,6 +3,7 @@
   /* Colors */
   --color-base: #272727;
   --color-accent: #569eff;
+  --color-accent-secondary: #416ca6;
 
   /* Contrast / opacity */
   --contrast-low: 0.3;
@@ -30,6 +31,17 @@
   --accent-default: var(--color-accent);
   --accent-hover: color-mix(in srgb, var(--color-accent) 90%, white);
   --accent-active: color-mix(in srgb, var(--color-accent) 85%, black);
+  --accent-secondary: var(--color-accent-secondary);
+  --accent-secondary-hover: color-mix(
+    in srgb,
+    var(--color-accent-secondary) 90%,
+    white
+  );
+  --accent-secondary-active: color-mix(
+    in srgb,
+    var(--color-accent-secondary) 85%,
+    black
+  );
 
   /* Borders */
   --border-subtle: rgba(255, 255, 255, 0.08);
@@ -55,7 +67,7 @@ body {
   padding: 0 1rem;
   background: #1f1f1f;
   color: var(--text-primary);
-  font-size: 1.1rem;
+  font-size: 1rem;
 }
 
 select {
@@ -69,7 +81,7 @@ select {
 
 .card {
   background: var(--bg-primary);
-  padding: 1rem 1.5rem;
+  padding: 1rem 1rem;
   border-radius: 5px;
   border: 1px solid var(--border-subtle);
 }
@@ -84,48 +96,25 @@ a:hover {
 }
 
 button {
-  background: #569eff;
-  color: white;
-  border: none;
+  background: var(--accent-default);
+  color: var(--text-primary);
+  border: var(--border-subtle);
   padding: 10px 20px;
-  border-radius: 5px;
+  border-radius: var(--radius-md);
   cursor: pointer;
-  font-weight: bold;
 }
 
 button:disabled {
-  background: #555;
+  background: var(--bg-secondary);
+}
+
+button:hover:not(:disabled) {
+  background: var(--accent-hover);
+  transform: translateY(-1px);
 }
 
 .loader {
-  color: #aaa;
   font-style: italic;
-}
-
-.platform-group {
-  border: 1px solid #444;
-  border-radius: 6px;
-  margin: 10px 0;
-  background: #2a2a2a;
-}
-
-.platform-group summary {
-  cursor: pointer;
-  padding: 10px 12px;
-  font-weight: bold;
-  list-style: none;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.platform-group summary .select-all {
-  margin-left: auto;
-  cursor: pointer;
-}
-
-.platform-files {
-  padding: 0 14px 10px 16px;
 }
 
 .warning-box {
@@ -136,33 +125,8 @@ button:disabled {
   color: #ffca28;
 }
 
-button:hover:not(:disabled) {
-  background: #5ba1d4;
-  transform: translateY(-1px);
-}
-
-.platform-group:hover {
-  border-color: #478cbf;
-}
-
-.file-item:hover {
-  color: #478cbf;
-}
-
-footer {
-  margin: 40px 0 20px;
-  padding-top: 14px;
-  border-top: 1px solid #333;
-  text-align: center;
-  color: #999;
-  font-size: 0.95em;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-}
-
-footer img {
-  height: 1.2em;
-  vertical-align: middle;
+input[type="checkbox"] {
+  width: 1rem;
+  height: 1rem;
+  accent-color: var(--accent-active);
 }
