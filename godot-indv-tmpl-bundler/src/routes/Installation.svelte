@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { command } from "$app/server";
+
   let { release, chosenAssets }: { release: Release; chosenAssets: Asset[] } =
     $props();
 
@@ -8,13 +10,15 @@
       codename: "linux",
       path: "~/.local/share/godot",
       supported: true,
-      command: "wget -i {1} -P {2}",
+      command: "wget -i {FILENAME} -P {PATH}",
     },
     {
       label: "Windows",
       codename: "windows",
-      path: "%APPDATA%\\Godot",
-      supported: false,
+      path: "$env:APPDATA/Godot",
+      supported: true,
+      command:
+        'powershell -NoProfile -ExecutionPolicy Bypass -Command "New-Item -ItemType Directory -Force -Path "{PATH}" | Out-Null; Get-Content "{FILENAME}" | ForEach-Object { Invoke-WebRequest -Uri $_ -OutFile (Join-Path "{PATH}" (Split-Path $_ -Leaf)) }"',
     },
     {
       label: "MacOS",
@@ -55,10 +59,10 @@
   function getPlatformCommand(
     platformCodename: string,
     fileName: string,
-    godotVersion: string
+    godotVersion: string,
   ): string {
     const platform = PLATFORM_PATHS.find(
-      (p) => p.codename === platformCodename && p.supported
+      (p) => p.codename === platformCodename && p.supported,
     );
     if (platform && platform.command) {
       if (!VERSION_DIR[godotVersion]) {
@@ -68,7 +72,9 @@
       const path = `${platform.path}/${VERSION_DIR[godotVersion]}/${
         RELEASE_DIR
       }`;
-      return platform.command.replace("{1}", fileName).replace("{2}", path);
+      return platform.command
+        .replaceAll("{FILENAME}", fileName)
+        .replaceAll("{PATH}", path);
     }
     return "";
   }
@@ -80,11 +86,11 @@
     alert("Commands copied to clipboard!");
   }
 
-  const fileName = "godot_export_template_urls.txt";
+  const fileName = "godot_export_templates_urls.txt";
 
   let targetPlatform: string = $state(PLATFORM_PATHS[0].codename);
   let commandOutput = $derived(
-    getPlatformCommand(targetPlatform, fileName, versionMajor)
+    getPlatformCommand(targetPlatform, fileName, versionMajor),
   );
 </script>
 
